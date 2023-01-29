@@ -1,0 +1,39 @@
+package com.epam.microservices.resourseservice.service;
+
+import com.epam.microservices.resourseservice.mapper.ResourceMapper;
+import com.epam.microservices.resourseservice.persistence.entry.Resource;
+import com.epam.microservices.resourseservice.persistence.repository.ResourceRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+
+
+@Service
+@RequiredArgsConstructor
+public class ResourceService {
+
+    private final StorageService storageService;
+    private final ResourceRepository repository;
+
+    public Integer createResource(MultipartFile data) {
+        String location = storageService.store(data);
+        Resource resource = new Resource(data.getOriginalFilename(), location);
+        return repository.save(resource).getId();
+    }
+
+    public byte[] getResourceById(Integer id) {
+        return repository.findById(id)
+                .map(Resource::getLocation)
+                .map(storageService::load)
+                .orElseThrow(); // TODO: 28.01.2023 replace with custom exception
+    }
+
+    public List<Integer> delete(List<Integer> ids) {
+        Iterable<Resource> resources = repository.findAllById(ids);
+        resources.forEach(entry -> storageService.delete(entry.getLocation()));
+        repository.deleteAllById(ids);
+        return ResourceMapper.INSTANCE.toListOfIds(resources);
+    }
+}
