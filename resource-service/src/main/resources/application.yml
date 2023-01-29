@@ -1,0 +1,30 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: RESOURCE
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/microservices_fundamentals
+    username: postgres
+    password: postgres
+    hikari:
+      connectionTimeout: 5000
+      validationTimeout: 2000
+      maximumPoolSize: 5
+      minimumIdle: 3
+  liquibase:
+    changeLog: classpath:db/changelog.xml
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    default-schema: public
+
+logging:
+  level:
+    liquibase: DEBUG
+    com.epam.microservices.resourseservice: DEBUG
