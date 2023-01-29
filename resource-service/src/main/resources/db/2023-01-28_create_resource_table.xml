@@ -1,0 +1,28 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="12c969df-06f9-464e-b77c-e535656d99df" author="oleg_mashkov@epam.com">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="resource"/>
+            </not>
+        </preConditions>
+        <comment>Create table: resource</comment>
+        <createTable tableName="resource">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="file_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
