@@ -1,0 +1,40 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="7088b654-21f0-4a44-88e6-1ea09600ca47" author="oleg_mashkov@epam.com">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="song"/>
+            </not>
+        </preConditions>
+        <comment>Create table: song</comment>
+        <createTable tableName="song">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="song_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="artist" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="album" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="length" type="VARCHAR(8)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="resource_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="year" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
