@@ -32,13 +32,31 @@ class ResourceControllerTest {
     private ResourceService service;
 
     @Test
-    void givenMultipartFile_whenPostWithRequestPart_thenReturnsOK() throws Exception {
+    void givenMP3MultipartFile_whenPostWithRequestPart_thenReturnsOK() throws Exception {
         MockMultipartFile data = new MockMultipartFile("data", "song.mp3", "audio/mpeg", TEST_CONTENT);
         when(service.createResource(data)).thenReturn(1);
 
         mockMvc.perform(multipart("/resources").file(data))
                 .andExpect(content().json("{\"id\":1}"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void givenNoMP3MultipartFile_whenPostWithRequestPart_thenReturnsBadRequest() throws Exception {
+        MockMultipartFile data = new MockMultipartFile("data", "song.wav", "audio/mpeg", TEST_CONTENT);
+        when(service.createResource(data)).thenReturn(1);
+
+        mockMvc.perform(multipart("/resources").file(data))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void givenMultipartFileWithoutAudioContentType_whenPostWithRequestPart_thenReturnsBadRequest() throws Exception {
+        MockMultipartFile data = new MockMultipartFile("data", "song.mp3", "application/json", TEST_CONTENT);
+        when(service.createResource(data)).thenReturn(1);
+
+        mockMvc.perform(multipart("/resources").file(data))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
