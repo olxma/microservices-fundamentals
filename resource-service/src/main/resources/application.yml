@@ -27,6 +27,14 @@ spring:
     password: ${spring.datasource.password}
     default-schema: public
 
+amazon:
+  s3:
+    bucket-name: test
+    endpoint: http://localhost:4566/
+    region: us-east-1
+#    access-key: username
+#    secret-key: password
+
 logging:
   level:
     liquibase: DEBUG
