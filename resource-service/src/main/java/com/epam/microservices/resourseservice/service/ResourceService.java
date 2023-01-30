@@ -33,8 +33,9 @@ public class ResourceService {
 
     public List<Integer> delete(List<Integer> ids) {
         Iterable<Resource> resources = repository.findAllById(ids);
-        resources.forEach(entry -> storageService.delete(entry.getLocation()));
-        repository.deleteAllById(ids);
+        String[] locations = ResourceMapper.INSTANCE.toListOfLocations(resources);
+        storageService.deleteAll(locations);
+        repository.deleteAll(resources);
         return ResourceMapper.INSTANCE.toListOfIds(resources);
     }
 }

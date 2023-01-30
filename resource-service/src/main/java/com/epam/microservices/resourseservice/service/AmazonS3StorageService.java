@@ -1,6 +1,7 @@
 package com.epam.microservices.resourseservice.service;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.DeleteObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.epam.microservices.resourseservice.exception.ResourceStorageException;
 import lombok.RequiredArgsConstructor;
@@ -50,8 +51,8 @@ public class AmazonS3StorageService implements StorageService {
     }
 
     @Override
-    public void delete(String location) {
-        amazonS3.deleteObject(bucketName, location);
+    public void deleteAll(String... locations) {
+        amazonS3.deleteObjects(new DeleteObjectsRequest(bucketName).withKeys(locations));
     }
 
     private static ObjectMetadata metadata(MultipartFile data) {

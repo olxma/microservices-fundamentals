@@ -7,5 +7,5 @@ public interface StorageService {
 
     byte[] get(String location);
 
-    void delete(String location);
+    void deleteAll(String... locations);
 }
