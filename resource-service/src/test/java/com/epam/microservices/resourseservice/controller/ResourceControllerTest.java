@@ -3,6 +3,8 @@ package com.epam.microservices.resourseservice.controller;
 import com.epam.microservices.resourseservice.exception.ResourceNotFoundException;
 import com.epam.microservices.resourseservice.service.ResourceService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -42,18 +44,19 @@ class ResourceControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    void givenNoMP3MultipartFile_whenPostWithRequestPart_thenReturnsBadRequest() throws Exception {
-        MockMultipartFile data = new MockMultipartFile("data", "song.wav", "audio/mpeg", TEST_CONTENT);
-        when(service.createResource(data)).thenReturn(1);
+    @ParameterizedTest
+    @CsvSource({
+            "song.wav, audio/mpeg",
+            "song.mp3, application/json",
+            "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" +
+                    "ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" +
+                    "ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" +
+                    "ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong, audio/mpeg"
+    })
+    void givenInvalidFileNameOrContentType_whenPostWithRequestPart_thenReturnsBadRequest(
+            String name, String contentType) throws Exception {
 
-        mockMvc.perform(multipart("/resources").file(data))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void givenMultipartFileWithoutAudioContentType_whenPostWithRequestPart_thenReturnsBadRequest() throws Exception {
-        MockMultipartFile data = new MockMultipartFile("data", "song.mp3", "application/json", TEST_CONTENT);
+        MockMultipartFile data = new MockMultipartFile("data", name, contentType, TEST_CONTENT);
         when(service.createResource(data)).thenReturn(1);
 
         mockMvc.perform(multipart("/resources").file(data))

@@ -4,6 +4,7 @@ import com.epam.microservices.resourseservice.model.CreationResult;
 import com.epam.microservices.resourseservice.model.DeletionParam;
 import com.epam.microservices.resourseservice.model.DeletionResult;
 import com.epam.microservices.resourseservice.service.ResourceService;
+import com.epam.microservices.resourseservice.validator.FileNameConstraintLength;
 import com.epam.microservices.resourseservice.validator.MP3TypeConstraint;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,8 @@ public class ResourceController {
     private final ResourceService service;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<CreationResult> createResource(@MP3TypeConstraint MultipartFile data) {
+    public ResponseEntity<CreationResult> createResource(@FileNameConstraintLength(max = 255)
+                                                         @MP3TypeConstraint MultipartFile data) {
         Integer id = service.createResource(data);
         return ResponseEntity.ok(new CreationResult(id));
     }
