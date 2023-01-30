@@ -1,5 +1,6 @@
 package com.epam.microservices.resourseservice.controller;
 
+import com.epam.microservices.resourseservice.exception.ResourceNotFoundException;
 import com.epam.microservices.resourseservice.service.ResourceService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,13 +61,30 @@ class ResourceControllerTest {
     }
 
     @Test
-    void givenResourceId_whenGetWithId_thenReturnsOK() throws Exception {
+    void givenResourceIdAndRange_whenGetWithId_thenReturnsPartialContent() throws Exception {
         when(service.getResourceById(1)).thenReturn(new byte[]{1, 2, 3, 4});
 
         mockMvc.perform(get("/resources/1")
                         .header(HttpHeaders.RANGE, "bytes=0-1"))
                 .andExpect(content().bytes(new byte[]{1, 2}))
                 .andExpect(status().isPartialContent());
+    }
+
+    @Test
+    void givenResourceId_whenGetWithId_thenReturnsOK() throws Exception {
+        when(service.getResourceById(1)).thenReturn(new byte[]{1, 2, 3, 4});
+
+        mockMvc.perform(get("/resources/1"))
+                .andExpect(content().bytes(new byte[]{1, 2, 3, 4}))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void givenNotExistingResourceId_whenGetWithId_thenReturnsNotFound() throws Exception {
+        when(service.getResourceById(1)).thenThrow(ResourceNotFoundException.class);
+
+        mockMvc.perform(get("/resources/1"))
+                .andExpect(status().isNotFound());
     }
 
     @Test

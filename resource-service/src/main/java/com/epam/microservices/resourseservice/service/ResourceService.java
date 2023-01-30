@@ -1,5 +1,6 @@
 package com.epam.microservices.resourseservice.service;
 
+import com.epam.microservices.resourseservice.exception.ResourceNotFoundException;
 import com.epam.microservices.resourseservice.mapper.ResourceMapper;
 import com.epam.microservices.resourseservice.persistence.entry.Resource;
 import com.epam.microservices.resourseservice.persistence.repository.ResourceRepository;
@@ -27,7 +28,7 @@ public class ResourceService {
         return repository.findById(id)
                 .map(Resource::getLocation)
                 .map(storageService::load)
-                .orElseThrow(); // TODO: 28.01.2023 replace with custom exception
+                .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public List<Integer> delete(List<Integer> ids) {
