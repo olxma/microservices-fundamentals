@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: RESOURCE
+  servlet:
+    multipart:
+      max-file-size: 10MB
   jpa:
     hibernate:
       ddl-auto: validate
