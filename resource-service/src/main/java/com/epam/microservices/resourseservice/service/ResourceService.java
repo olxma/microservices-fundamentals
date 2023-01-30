@@ -19,7 +19,7 @@ public class ResourceService {
     private final ResourceRepository repository;
 
     public Integer createResource(MultipartFile data) {
-        String location = storageService.store(data);
+        String location = storageService.put(data);
         Resource resource = new Resource(data.getOriginalFilename(), location);
         return repository.save(resource).getId();
     }
@@ -27,7 +27,7 @@ public class ResourceService {
     public byte[] getResourceById(Integer id) {
         return repository.findById(id)
                 .map(Resource::getLocation)
-                .map(storageService::load)
+                .map(storageService::get)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
