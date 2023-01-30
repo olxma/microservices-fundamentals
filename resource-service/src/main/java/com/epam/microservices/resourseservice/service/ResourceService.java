@@ -15,6 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ResourceService {
 
+    private static final ResourceMapper MAPPER = ResourceMapper.INSTANCE;
+
     private final StorageService storageService;
     private final ResourceRepository repository;
 
@@ -33,9 +35,9 @@ public class ResourceService {
 
     public List<Integer> delete(List<Integer> ids) {
         Iterable<Resource> resources = repository.findAllById(ids);
-        String[] locations = ResourceMapper.INSTANCE.toListOfLocations(resources);
+        String[] locations = MAPPER.toListOfLocations(resources);
         storageService.deleteAll(locations);
         repository.deleteAll(resources);
-        return ResourceMapper.INSTANCE.toListOfIds(resources);
+        return MAPPER.toListOfIds(resources);
     }
 }
