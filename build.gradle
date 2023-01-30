@@ -11,6 +11,8 @@ subprojects {
 
     sourceCompatibility = '17'
 
+    group 'com.epam.microservices'
+
     configurations {
         compileOnly {
             extendsFrom annotationProcessor
