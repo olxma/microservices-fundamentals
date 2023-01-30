@@ -1,0 +1,15 @@
+package com.epam.microservices.songservice.errorhandling;
+
+import jakarta.validation.ConstraintViolationException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+@ControllerAdvice
+public class SongErrorHandlingAdvice {
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<String> onConstraintViolationException(ConstraintViolationException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+}
