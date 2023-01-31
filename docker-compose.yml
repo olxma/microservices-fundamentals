@@ -1,14 +1,23 @@
 version: '3.8'
 services:
-  db:
-    container_name: postgres
+  resource_service_db:
+    container_name: resource_service_postgres
     image: postgres:15.1-alpine
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=microservices_fundamentals
+      - POSTGRES_DB=resource_service
     ports:
       - '5432:5432'
+  song_service_db:
+    container_name: song_service_postgres
+    image: postgres:15.1-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=song_service
+    ports:
+      - '5433:5432'
   aws:
     container_name: localstack
     image: localstack/localstack

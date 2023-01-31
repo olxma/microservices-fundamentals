@@ -9,7 +9,7 @@ spring:
       ddl-auto: validate
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/microservices_fundamentals
+    url: jdbc:postgresql://localhost:5433/song_service
     username: postgres
     password: postgres
     hikari:
