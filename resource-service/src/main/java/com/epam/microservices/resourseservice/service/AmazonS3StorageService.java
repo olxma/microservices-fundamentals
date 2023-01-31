@@ -45,7 +45,7 @@ public class AmazonS3StorageService implements StorageService {
         try {
             return amazonS3.getObject(bucketName, location).getObjectContent().readAllBytes();
         } catch (IOException e) {
-            log.error(GET_ERROR_MESSAGE_TEMPLATE, "test", location, e);
+            log.error(GET_ERROR_MESSAGE_TEMPLATE, bucketName, location, e);
             throw new ResourceStorageException(GET_ERROR_MESSAGE, e);
         }
     }
