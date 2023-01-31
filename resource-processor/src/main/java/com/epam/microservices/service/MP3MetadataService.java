@@ -2,7 +2,6 @@ package com.epam.microservices.service;
 
 import com.epam.microservices.mapper.AudioFileMetadataMapper;
 import com.epam.microservices.model.AudioFileMetadata;
-import com.epam.microservices.model.MetadataProperty;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
@@ -26,9 +25,6 @@ public class MP3MetadataService {
             ParseContext parseCtx = new ParseContext();
             parser.parse(input, handler, metadata, parseCtx);
 
-            for (MetadataProperty property : MetadataProperty.values()) {
-                System.out.printf("%s: %s%n", property.getName(), metadata.get(property.getTag()));
-            }
             return AudioFileMetadataMapper.INSTANCE.toAudioFileMetadata(metadata);
         } catch (Exception e) {
             e.printStackTrace(); // TODO: 31.01.2023 replace with custom exception throwing

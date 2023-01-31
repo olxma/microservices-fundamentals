@@ -1,5 +1,6 @@
 package com.epam.microservices;
 
+import com.epam.microservices.model.AudioFileMetadata;
 import com.epam.microservices.service.MP3MetadataService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class ResourceProcessorApplication implements CommandLineRunner {
         String path = args[0];
         System.out.println("Parsing file: " + path);
 
-        service.extractMetadata(new File(path));
+        AudioFileMetadata metadata = service.extractMetadata(new File(path));
+        System.out.println(metadata);
     }
 }

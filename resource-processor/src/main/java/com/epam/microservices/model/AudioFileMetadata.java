@@ -7,8 +7,8 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @Builder
+@ToString
 public class AudioFileMetadata {
     private String songName;
     private String artist;
