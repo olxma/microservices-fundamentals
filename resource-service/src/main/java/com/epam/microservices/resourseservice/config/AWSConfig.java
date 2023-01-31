@@ -4,8 +4,6 @@ import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.AmazonS3Exception;
-import com.amazonaws.services.s3.model.HeadBucketRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -38,10 +36,10 @@ public class AWSConfig {
 
     @EventListener(ApplicationReadyEvent.class)
     public void createS3Bucket() {
-        try {
-            amazonS3().headBucket(new HeadBucketRequest(bucketName));
+        boolean bucketExist = amazonS3().doesBucketExistV2(bucketName);
+        if (bucketExist) {
             log.info("Found Amazon S3 bucket with name '{}'", bucketName);
-        } catch (AmazonS3Exception e) {
+        } else {
             log.info("Amazon S3 bucket with name '{}' was created successfully", bucketName);
             amazonS3().createBucket(bucketName);
         }
