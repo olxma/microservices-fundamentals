@@ -2,6 +2,7 @@ package com.epam.microservices.resourseservice.service;
 
 import com.epam.microservices.resourseservice.exception.ResourceNotFoundException;
 import com.epam.microservices.resourseservice.mapper.ResourceMapper;
+import com.epam.microservices.resourseservice.model.ResourceData;
 import com.epam.microservices.resourseservice.persistence.entry.Resource;
 import com.epam.microservices.resourseservice.persistence.repository.ResourceRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +27,14 @@ public class ResourceService {
         return repository.save(resource).getId();
     }
 
-    public byte[] getResourceById(Integer id) {
-        return repository.findById(id)
-                .map(Resource::getLocation)
-                .map(storageService::get)
+    public ResourceData getResourceById(Integer id) {
+        ResourceData resourceData = repository.findById(id)
+                .map(MAPPER::toResourceData)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
+        byte[] content = storageService.get(resourceData.getLocation());
+        resourceData.setContent(content);
+
+        return resourceData;
     }
 
     public List<Integer> delete(List<Integer> ids) {

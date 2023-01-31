@@ -1,7 +1,9 @@
 package com.epam.microservices.resourseservice.mapper;
 
+import com.epam.microservices.resourseservice.model.ResourceData;
 import com.epam.microservices.resourseservice.persistence.entry.Resource;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -22,4 +24,7 @@ public interface ResourceMapper {
     default Integer toInt(Resource resource) {
         return resource.getId();
     }
+
+    @Mapping(target = "content", ignore = true)
+    ResourceData toResourceData(Resource resource);
 }

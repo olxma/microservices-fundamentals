@@ -1,6 +1,7 @@
 package com.epam.microservices.resourseservice.controller;
 
 import com.epam.microservices.resourseservice.exception.ResourceNotFoundException;
+import com.epam.microservices.resourseservice.model.ResourceData;
 import com.epam.microservices.resourseservice.service.ResourceService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -65,7 +66,8 @@ class ResourceControllerTest {
 
     @Test
     void givenResourceIdAndRange_whenGetWithId_thenReturnsPartialContent() throws Exception {
-        when(service.getResourceById(1)).thenReturn(new byte[]{1, 2, 3, 4});
+        ResourceData data = new ResourceData("location-test", "filename-test", new byte[]{1, 2, 3, 4});
+        when(service.getResourceById(1)).thenReturn(data);
 
         mockMvc.perform(get("/resources/1")
                         .header(HttpHeaders.RANGE, "bytes=0-1"))
@@ -75,7 +77,8 @@ class ResourceControllerTest {
 
     @Test
     void givenResourceId_whenGetWithId_thenReturnsOK() throws Exception {
-        when(service.getResourceById(1)).thenReturn(new byte[]{1, 2, 3, 4});
+        ResourceData data = new ResourceData("location-test", "filename-test", new byte[]{1, 2, 3, 4});
+        when(service.getResourceById(1)).thenReturn(data);
 
         mockMvc.perform(get("/resources/1"))
                 .andExpect(content().bytes(new byte[]{1, 2, 3, 4}))
