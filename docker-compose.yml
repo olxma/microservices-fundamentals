@@ -9,3 +9,11 @@ services:
       - POSTGRES_DB=microservices_fundamentals
     ports:
       - '5432:5432'
+  aws:
+    container_name: localstack
+    image: localstack/localstack
+    ports:
+      - '4566:4566'
+      - '4572:4572'
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
