@@ -1,0 +1,28 @@
+server:
+  port: 8087
+
+spring:
+  application:
+    name: RESOURCE-PROCESSOR
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: processor
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.value.default.type: com.epam.microservices.resourceprocessor.model.ResourceEvent
+
+resource-event-topic: resources
+
+feign:
+  resource-service:
+    host: localhost:8085
+  song-service:
+    host: localhost:8086
+
+logging:
+  level:
+    liquibase: DEBUG
+    com.epam.microservices.resourceprocessor: DEBUG

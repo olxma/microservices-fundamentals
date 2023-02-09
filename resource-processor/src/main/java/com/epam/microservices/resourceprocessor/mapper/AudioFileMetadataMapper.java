@@ -1,7 +1,7 @@
-package com.epam.microservices.mapper;
+package com.epam.microservices.resourceprocessor.mapper;
 
-import com.epam.microservices.model.AudioFileMetadata;
-import com.epam.microservices.model.MetadataProperty;
+import com.epam.microservices.resourceprocessor.model.AudioFileMetadata;
+import com.epam.microservices.resourceprocessor.model.MetadataProperty;
 import org.apache.tika.metadata.Metadata;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -15,7 +15,7 @@ public interface AudioFileMetadataMapper {
 
     default AudioFileMetadata toAudioFileMetadata(Metadata metadata) {
         return AudioFileMetadata.builder()
-                .songName(metadata.get(MetadataProperty.TITLE.getTag()))
+                .name(metadata.get(MetadataProperty.TITLE.getTag()))
                 .artist(metadata.get(MetadataProperty.ARTIST.getTag()))
                 .album(metadata.get(MetadataProperty.ALBUM.getTag()))
                 .length(toPrettyLength(metadata.get(MetadataProperty.DURATION.getTag())))
