@@ -18,22 +18,16 @@
             <column name="song_name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="artist" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="album" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="length" type="VARCHAR(8)">
-                <constraints nullable="false"/>
-            </column>
+            <column name="artist" type="VARCHAR(255)"/>
+            <column name="album" type="VARCHAR(255)"/>
+            <column name="length" type="VARCHAR(8)"/>
             <column name="resource_id" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="year" type="INT">
+            <column name="year" type="INT"/>
+            <column name="created_at" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
-            <column name="created_at" type="TIMESTAMP"/>
         </createTable>
     </changeSet>
 
