@@ -3,6 +3,7 @@ package com.epam.microservices.resourseservice.service;
 import com.epam.microservices.resourseservice.exception.ResourceNotFoundException;
 import com.epam.microservices.resourseservice.mapper.ResourceMapper;
 import com.epam.microservices.resourseservice.model.ResourceData;
+import com.epam.microservices.resourseservice.model.ResourceEvent;
 import com.epam.microservices.resourseservice.persistence.entry.Resource;
 import com.epam.microservices.resourseservice.persistence.repository.ResourceRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +21,14 @@ public class ResourceService {
 
     private final StorageService storageService;
     private final ResourceRepository repository;
+    private final ResourceEventProducer<ResourceEvent> eventProducer;
 
     public Integer createResource(MultipartFile data) {
         String location = storageService.put(data);
         Resource resource = new Resource(data.getOriginalFilename(), location);
-        return repository.save(resource).getId();
+        repository.save(resource);
+        eventProducer.sendMessage(new ResourceEvent(resource.getId(), resource.getCreatedAt()));
+        return resource.getId();
     }
 
     public ResourceData getResourceById(Integer id) {
