@@ -13,8 +13,9 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.value.default.type: com.epam.microservices.resourceprocessor.model.ResourceEvent
-
-resource-event-topic: resources
+      backoff-interval: 1000
+      max-attempts: 5
+      resource-event-topic: resources
 
 feign:
   resource-service:

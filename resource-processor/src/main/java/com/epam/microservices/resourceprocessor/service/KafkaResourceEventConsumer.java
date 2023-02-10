@@ -19,7 +19,9 @@ public class KafkaResourceEventConsumer implements ResourceEventConsumer<Resourc
     private final ResourceServiceClient resourceServiceClient;
     private final SongServiceClient songServiceClient;
 
-    @KafkaListener(topics = "${resource-event-topic}", groupId = "${spring.kafka.consumer.group-id}")
+    @KafkaListener(
+            topics = "${spring.kafka.consumer.resource-event-topic}",
+            groupId = "${spring.kafka.consumer.group-id}")
     @Override
     public void consume(ResourceEvent event) {
         Integer resourceId = event.resourceId();
