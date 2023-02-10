@@ -16,12 +16,22 @@ spring:
       backoff-interval: 1000
       max-attempts: 5
       resource-event-topic: resources
-
-feign:
-  resource-service:
-    host: localhost:8085
-  song-service:
-    host: localhost:8086
+  cloud:
+    openfeign:
+      client:
+        config:
+          resourceService:
+            url: localhost:8085
+            connect-timeout: 5000
+            read-timeout: 5000
+            loggerLevel: basic
+            retryer: com.epam.microservices.resourceprocessor.feign.DefaultFeignRetryer
+          songService:
+            url: localhost:8086
+            connect-timeout: 5000
+            read-timeout: 5000
+            loggerLevel: basic
+            retryer: com.epam.microservices.resourceprocessor.feign.DefaultFeignRetryer
 
 logging:
   level:
