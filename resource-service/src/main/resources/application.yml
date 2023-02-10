@@ -33,8 +33,7 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
         spring.json.add.type.headers: false
-
-resource-event-topic: resources
+      resource-event-topic: resources
 
 amazon:
   s3:

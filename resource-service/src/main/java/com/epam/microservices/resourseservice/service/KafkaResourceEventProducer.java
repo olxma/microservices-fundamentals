@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KafkaResourceEventProducer implements ResourceEventProducer<ResourceEvent> {
 
-    @Value("${resource-event-topic}")
+    @Value("${spring.kafka.producer.resource-event-topic}")
     private String topic;
 
     private final KafkaTemplate<Long, ResourceEvent> kafkaTemplate;
