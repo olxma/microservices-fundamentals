@@ -26,12 +26,14 @@ spring:
             read-timeout: 5000
             loggerLevel: basic
             retryer: com.epam.microservices.resourceprocessor.feign.DefaultFeignRetryer
+            error-decoder: com.epam.microservices.resourceprocessor.feign.Custom5xxErrorDecoder
           songService:
             url: localhost:8086
             connect-timeout: 5000
             read-timeout: 5000
             loggerLevel: basic
             retryer: com.epam.microservices.resourceprocessor.feign.DefaultFeignRetryer
+            error-decoder: com.epam.microservices.resourceprocessor.feign.Custom5xxErrorDecoder
 
 logging:
   level:
