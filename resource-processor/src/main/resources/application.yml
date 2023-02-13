@@ -12,6 +12,7 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
+        allow.auto.create.topics: false
         spring.json.value.default.type: com.epam.microservices.resourceprocessor.model.ResourceEvent
       backoff-interval: 1000
       max-attempts: 5
