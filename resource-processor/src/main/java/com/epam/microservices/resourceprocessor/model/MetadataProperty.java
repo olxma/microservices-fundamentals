@@ -1,4 +1,4 @@
-package com.epam.microservices.model;
+package com.epam.microservices.resourceprocessor.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

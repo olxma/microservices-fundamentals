@@ -26,6 +26,14 @@ spring:
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
     default-schema: public
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+      resource-event-topic: resources
 
 amazon:
   s3:

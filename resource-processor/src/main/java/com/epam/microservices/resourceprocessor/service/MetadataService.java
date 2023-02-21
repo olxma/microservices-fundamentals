@@ -1,24 +1,26 @@
-package com.epam.microservices.service;
+package com.epam.microservices.resourceprocessor.service;
 
-import com.epam.microservices.mapper.AudioFileMetadataMapper;
-import com.epam.microservices.model.AudioFileMetadata;
+import com.epam.microservices.resourceprocessor.exception.ExtractMetadataException;
+import com.epam.microservices.resourceprocessor.mapper.AudioFileMetadataMapper;
+import com.epam.microservices.resourceprocessor.model.AudioFileMetadata;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
 import org.apache.tika.parser.mp3.Mp3Parser;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 
+@Slf4j
 @Service
-public class MP3MetadataService {
+public class MetadataService {
 
-    public AudioFileMetadata extractMetadata(File file) {
-        try (InputStream input = new FileInputStream(file)) {
+    public AudioFileMetadata extractMetadata(ByteArrayResource resource) {
+        try (InputStream input = resource.getInputStream()) {
             ContentHandler handler = new DefaultHandler();
             Metadata metadata = new Metadata();
             Parser parser = new Mp3Parser();
@@ -27,8 +29,8 @@ public class MP3MetadataService {
 
             return AudioFileMetadataMapper.INSTANCE.toAudioFileMetadata(metadata);
         } catch (Exception e) {
-            e.printStackTrace(); // TODO: 31.01.2023 replace with custom exception throwing
+            log.error("Couldn't extract metadata from resource", e);
+            throw new ExtractMetadataException(e);
         }
-        return null; // TODO: 31.01.2023 remove it after adding custom exception throwing
     }
 }

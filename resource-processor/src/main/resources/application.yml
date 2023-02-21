@@ -1,0 +1,42 @@
+server:
+  port: 8087
+
+spring:
+  application:
+    name: RESOURCE-PROCESSOR
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: processor
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        allow.auto.create.topics: false
+        spring.json.value.default.type: com.epam.microservices.resourceprocessor.model.ResourceEvent
+      backoff-interval: 1000
+      max-attempts: 5
+      resource-event-topic: resources
+  cloud:
+    openfeign:
+      client:
+        config:
+          resourceService:
+            url: localhost:8085
+            connect-timeout: 5000
+            read-timeout: 5000
+            loggerLevel: basic
+            retryer: com.epam.microservices.resourceprocessor.feign.DefaultFeignRetryer
+            error-decoder: com.epam.microservices.resourceprocessor.feign.Custom5xxErrorDecoder
+          songService:
+            url: localhost:8086
+            connect-timeout: 5000
+            read-timeout: 5000
+            loggerLevel: basic
+            retryer: com.epam.microservices.resourceprocessor.feign.DefaultFeignRetryer
+            error-decoder: com.epam.microservices.resourceprocessor.feign.Custom5xxErrorDecoder
+
+logging:
+  level:
+    liquibase: DEBUG
+    com.epam.microservices.resourceprocessor: DEBUG
