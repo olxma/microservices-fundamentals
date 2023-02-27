@@ -4,17 +4,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.With;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 
+@Data
+@With
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Resource {
 
     public Resource(String fileName, String location) {

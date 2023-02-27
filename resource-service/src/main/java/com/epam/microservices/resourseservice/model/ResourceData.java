@@ -1,6 +1,7 @@
 package com.epam.microservices.resourseservice.model;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,8 +9,9 @@ import org.springframework.http.HttpHeaders;
 
 @Setter
 @Getter
-@AllArgsConstructor
+@EqualsAndHashCode
 @NoArgsConstructor
+@AllArgsConstructor
 public class ResourceData {
 
     private static final String DEFAULT_CONTENT_TYPE = "audio/mpeg";
