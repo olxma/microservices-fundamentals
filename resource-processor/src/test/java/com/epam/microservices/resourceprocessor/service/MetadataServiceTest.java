@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/* EXAMPLES OF UNIT TESTS */
 class MetadataServiceTest {
 
     private static final String TEST_FILE = "test.mp3";

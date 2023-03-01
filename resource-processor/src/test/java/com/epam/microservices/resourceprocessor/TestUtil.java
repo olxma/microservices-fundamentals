@@ -25,6 +25,11 @@ public class TestUtil {
         return OBJECT_MAPPER.readValue(file, tClass);
     }
 
+    public static String readFileAsString(String fileName) throws IOException {
+        File file = new ClassPathResource(fileName).getFile();
+        return Files.readString(file.toPath());
+    }
+
     public static AudioFileMetadata getDefaultAudioFileMetadata(Integer resourceId) {
         return AudioFileMetadata.builder()
                 .name("name")

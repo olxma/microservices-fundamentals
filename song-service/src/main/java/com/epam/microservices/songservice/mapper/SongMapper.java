@@ -14,6 +14,8 @@ public interface SongMapper {
     SongMapper INSTANCE = Mappers.getMapper(SongMapper.class);
 
     @Mapping(target = "songName", source = "name")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     Song toSong(SongMetadata metadata);
 
     @Mapping(target = "name", source = "songName")

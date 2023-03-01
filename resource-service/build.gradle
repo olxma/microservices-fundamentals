@@ -1,3 +1,23 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:4.0.1"
+    }
+}
+
+apply plugin: 'spring-cloud-contract'
+apply plugin: 'groovy'
+apply plugin: 'maven-publish'
+
+contracts {
+    testFramework = 'JUNIT5'
+    testMode = 'MockMvc'
+    contractsDslDir = project.file("${project(':resource-service').projectDir}/src/test/resources/contracts")
+    baseClassForTests = 'com.epam.microservices.resourseservice.ContractBaseTest'
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.liquibase:liquibase-core'
@@ -5,4 +25,22 @@ dependencies {
     implementation 'com.amazonaws:aws-java-sdk-s3:1.12.313'
     implementation 'org.springframework.kafka:spring-kafka'
     runtimeOnly 'org.postgresql:postgresql'
+
+    testImplementation('org.springframework.cloud:spring-cloud-starter-contract-verifier:2.2.8.RELEASE')
+
+    modules {
+        module("org.codehaus.groovy:groovy") {
+            replacedBy("org.apache.groovy:groovy", "conflicts in current rest-assured version")
+        }
+        module("org.codehaus.groovy:groovy-json") {
+            replacedBy("org.apache.groovy:groovy-json", "conflicts in current rest-assured version")
+        }
+        module("org.codehaus.groovy:groovy-xml") {
+            replacedBy("org.apache.groovy:groovy-xml", "conflicts in current rest-assured version")
+        }
+    }
+}
+
+contractTest {
+    useJUnitPlatform()
 }
