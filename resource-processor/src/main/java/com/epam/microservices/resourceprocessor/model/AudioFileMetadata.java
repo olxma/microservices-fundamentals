@@ -1,15 +1,15 @@
 package com.epam.microservices.resourceprocessor.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.With;
 
-@Getter
-@Setter
+@Data
 @Builder
-@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class AudioFileMetadata {
     private String name;
     private String artist;

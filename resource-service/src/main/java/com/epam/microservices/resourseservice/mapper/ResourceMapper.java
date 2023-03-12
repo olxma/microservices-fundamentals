@@ -26,5 +26,6 @@ public interface ResourceMapper {
     }
 
     @Mapping(target = "content", ignore = true)
+    @Mapping(target = "metadataAsHttpHeaders", ignore = true)
     ResourceData toResourceData(Resource resource);
 }
