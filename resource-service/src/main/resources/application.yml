@@ -1,5 +1,5 @@
 server:
-  port: 8085
+  port: ${RESOURCE_SERVICE_PORT:8085}
 
 spring:
   application:
@@ -12,7 +12,7 @@ spring:
       ddl-auto: validate
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/resource_service
+    url: jdbc:postgresql://${RESOURCE_DB_HOST:localhost}:${RESOURCE_DB_PORT:5432}/resource_service
     username: postgres
     password: postgres
     hikari:
@@ -28,7 +28,7 @@ spring:
     default-schema: public
   kafka:
     producer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
       key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
@@ -38,10 +38,8 @@ spring:
 amazon:
   s3:
     bucket-name: test
-    endpoint: http://localhost:4566/
+    endpoint: http://${AWS_HOST:localhost}:${AWS_PORT:4566}/
     region: us-east-1
-#    access-key: username
-#    secret-key: password
 
 logging:
   level:
