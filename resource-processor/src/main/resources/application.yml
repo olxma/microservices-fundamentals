@@ -1,18 +1,18 @@
 server:
-  port: 8087
+  port: ${RESOURCE_PROCESSOR_PORT:8087}
 
 spring:
   application:
     name: RESOURCE-PROCESSOR
   kafka:
     consumer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
       group-id: processor
       auto-offset-reset: latest
       key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        allow.auto.create.topics: false
+        allow.auto.create.topics: true
         spring.json.value.default.type: com.epam.microservices.resourceprocessor.model.ResourceEvent
       backoff-interval: 1000
       max-attempts: 5
@@ -22,14 +22,14 @@ spring:
       client:
         config:
           resourceService:
-            url: localhost:8085
+            url: ${RESOURCE_SERVICE_HOST:localhost}:${RESOURCE_SERVICE_PORT:8085}
             connect-timeout: 5000
             read-timeout: 5000
             loggerLevel: basic
             retryer: com.epam.microservices.resourceprocessor.feign.DefaultFeignRetryer
             error-decoder: com.epam.microservices.resourceprocessor.feign.Custom5xxErrorDecoder
           songService:
-            url: localhost:8086
+            url: ${SONG_SERVICE_HOST:localhost}:${SONG_SERVICE_PORT:8086}
             connect-timeout: 5000
             read-timeout: 5000
             loggerLevel: basic
