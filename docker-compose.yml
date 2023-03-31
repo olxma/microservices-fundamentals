@@ -19,6 +19,7 @@ services:
       - POSTGRES_DB=song_service
     ports:
       - '5433:5432'
+
   aws:
     container_name: localstack
     image: localstack/localstack
@@ -52,6 +53,17 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
 
+  registry-service:
+    container_name: registry-service
+    build:
+      context: registry-service
+      dockerfile: Dockerfile
+    image: registry-service:latest
+    env_file:
+      - .env
+    ports:
+      - '8088:8088'
+
   resource-service:
     container_name: resource-service
     build:
@@ -59,6 +71,7 @@ services:
       dockerfile: Dockerfile
     image: resource-service:latest
     depends_on:
+      - registry-service
       - resource-service-db
       - kafka-broker
       - aws
@@ -74,6 +87,7 @@ services:
       dockerfile: Dockerfile
     image: song-service:latest
     depends_on:
+      - registry-service
       - song-service-db
     env_file:
       - .env
@@ -87,6 +101,7 @@ services:
       dockerfile: Dockerfile
     image: resource-processor:latest
     depends_on:
+      - registry-service
       - kafka-broker
       - resource-service
       - song-service
@@ -94,3 +109,14 @@ services:
       - .env
     ports:
       - '8087:8087'
+
+  gateway-service:
+    container_name: gateway-service
+    build:
+      context: gateway-service
+      dockerfile: Dockerfile
+    image: gateway-service:latest
+    env_file:
+      - .env
+    ports:
+      - '8089:8089'

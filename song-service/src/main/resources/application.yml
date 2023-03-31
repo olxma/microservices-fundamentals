@@ -24,6 +24,10 @@ spring:
     password: ${spring.datasource.password}
     default-schema: public
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${DISCOVERY:http://localhost:8088/eureka/}
 logging:
   level:
     liquibase: DEBUG
