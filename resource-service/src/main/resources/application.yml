@@ -41,6 +41,10 @@ amazon:
     endpoint: http://${AWS_HOST:localhost}:${AWS_PORT:4566}/
     region: us-east-1
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${DISCOVERY:http://localhost:8088/eureka/}
 logging:
   level:
     liquibase: DEBUG

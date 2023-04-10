@@ -1,0 +1,17 @@
+server:
+  port: ${REGISTRY_SERVICE_PORT:8088}
+
+spring:
+  application:
+    name: REGISTRY
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+logging:
+  level:
+    com.netflix.eureka: OFF
+    com.netflix.discovery: OFF
+

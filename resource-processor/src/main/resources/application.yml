@@ -21,20 +21,23 @@ spring:
     openfeign:
       client:
         config:
-          resourceService:
-            url: ${RESOURCE_SERVICE_HOST:localhost}:${RESOURCE_SERVICE_PORT:8085}
+          RESOURCE:
             connect-timeout: 5000
             read-timeout: 5000
             loggerLevel: basic
             retryer: com.epam.microservices.resourceprocessor.feign.DefaultFeignRetryer
             error-decoder: com.epam.microservices.resourceprocessor.feign.Custom5xxErrorDecoder
-          songService:
-            url: ${SONG_SERVICE_HOST:localhost}:${SONG_SERVICE_PORT:8086}
+          SONG:
             connect-timeout: 5000
             read-timeout: 5000
             loggerLevel: basic
             retryer: com.epam.microservices.resourceprocessor.feign.DefaultFeignRetryer
             error-decoder: com.epam.microservices.resourceprocessor.feign.Custom5xxErrorDecoder
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${DISCOVERY:http://localhost:8088/eureka/}
 
 logging:
   level:
