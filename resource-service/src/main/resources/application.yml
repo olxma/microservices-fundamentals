@@ -34,10 +34,19 @@ spring:
       properties:
         spring.json.add.type.headers: false
       resource-event-topic: resources
+  cloud:
+    openfeign:
+      client:
+        config:
+          STORAGE:
+            connect-timeout: 5000
+            read-timeout: 5000
+            loggerLevel: basic
+            retryer: com.epam.microservices.resourceservice.feign.DefaultFeignRetryer
+            error-decoder: com.epam.microservices.resourceservice.feign.Custom5xxErrorDecoder
 
 amazon:
   s3:
-    bucket-name: test
     endpoint: http://${AWS_HOST:localhost}:${AWS_PORT:4566}/
     region: us-east-1
 
@@ -48,4 +57,4 @@ eureka:
 logging:
   level:
     liquibase: DEBUG
-    com.epam.microservices.resourseservice: DEBUG
+    com.epam.microservices.resourceservice: DEBUG

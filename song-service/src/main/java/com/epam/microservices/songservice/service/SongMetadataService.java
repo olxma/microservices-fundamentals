@@ -3,7 +3,7 @@ package com.epam.microservices.songservice.service;
 import com.epam.microservices.songservice.exception.SongNotFoundException;
 import com.epam.microservices.songservice.mapper.SongMapper;
 import com.epam.microservices.songservice.model.SongMetadata;
-import com.epam.microservices.songservice.persistence.entry.Song;
+import com.epam.microservices.songservice.persistence.entity.Song;
 import com.epam.microservices.songservice.persistence.repository.SongRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

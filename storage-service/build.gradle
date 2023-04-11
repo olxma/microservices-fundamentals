@@ -1,0 +1,8 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.liquibase:liquibase-core'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.0.0'
+    implementation 'org.hibernate:hibernate-validator:8.0.0.Final'
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.313'
+    runtimeOnly 'org.postgresql:postgresql'
+}

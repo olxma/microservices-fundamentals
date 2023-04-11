@@ -1,6 +1,6 @@
 package com.epam.microservices.songservice.persistence.repository;
 
-import com.epam.microservices.songservice.persistence.entry.Song;
+import com.epam.microservices.songservice.persistence.entity.Song;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

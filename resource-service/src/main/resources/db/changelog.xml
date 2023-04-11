@@ -5,5 +5,6 @@
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
     <include file="db/2023-01-28_create_resource_table.xml"/>
+    <include file="db/2023-04-11_add_state_column_to_resource_table.xml"/>
 
 </databaseChangeLog>

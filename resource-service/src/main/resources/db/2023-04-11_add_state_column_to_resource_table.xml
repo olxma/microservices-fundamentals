@@ -1,0 +1,19 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="2835b0fb-ffa1-4dee-872f-ad8ca3694e5e" author="oleg_mashkov@epam.com">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="resource" columnName="state"/>
+            </not>
+        </preConditions>
+        <comment>Add column to 'resource' table: state</comment>
+        <addColumn tableName="resource">
+            <column name="state" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

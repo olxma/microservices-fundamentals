@@ -10,3 +10,22 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
         spring.json.add.type.headers: false
+
+  cloud:
+    openfeign:
+      client:
+        config:
+          RESOURCE:
+            connect-timeout: 5000
+            read-timeout: 5000
+            loggerLevel: basic
+            url: localhost:8085
+            retryer: com.epam.microservices.resourceprocessor.feign.DefaultFeignRetryer
+            error-decoder: com.epam.microservices.resourceprocessor.feign.Custom5xxErrorDecoder
+          SONG:
+            connect-timeout: 5000
+            read-timeout: 5000
+            loggerLevel: basic
+            url: localhost:8086
+            retryer: com.epam.microservices.resourceprocessor.feign.DefaultFeignRetryer
+            error-decoder: com.epam.microservices.resourceprocessor.feign.Custom5xxErrorDecoder
