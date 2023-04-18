@@ -28,5 +28,6 @@ public class KafkaResourceEventConsumer implements ResourceEventConsumer<Resourc
         ByteArrayResource resource = resourceServiceClient.getResourceById(resourceId);
         AudioFileMetadata metadata = metadataService.extractMetadata(resource).withResourceId(resourceId);
         songServiceClient.createSongMetadata(metadata);
+        resourceServiceClient.processed(resourceId);
     }
 }

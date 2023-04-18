@@ -1,7 +1,7 @@
 package com.epam.microservices.songservice;
 
 import com.epam.microservices.songservice.model.SongMetadata;
-import com.epam.microservices.songservice.persistence.entry.Song;
+import com.epam.microservices.songservice.persistence.entity.Song;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

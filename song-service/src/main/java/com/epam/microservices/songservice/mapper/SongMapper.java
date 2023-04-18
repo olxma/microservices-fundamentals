@@ -1,7 +1,7 @@
 package com.epam.microservices.songservice.mapper;
 
 import com.epam.microservices.songservice.model.SongMetadata;
-import com.epam.microservices.songservice.persistence.entry.Song;
+import com.epam.microservices.songservice.persistence.entity.Song;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

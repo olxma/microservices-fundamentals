@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 openjdk:17-jdk-alpine
+FROM --platform=linux/arm64/v8 openjdk:17.0.1
 WORKDIR /opt/app
 ARG JAR_FILE=registry-service.jar
 COPY build/libs/${JAR_FILE} app.jar

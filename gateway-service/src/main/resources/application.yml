@@ -22,6 +22,11 @@ spring:
           uri: lb://SONG
           predicates:
             - Path=/songs/**
+        -
+          id: STORAGE
+          uri: lb://STORAGE
+          predicates:
+            - Path=/storages/**
 
 eureka:
   client:
