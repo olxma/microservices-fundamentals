@@ -36,6 +36,7 @@ public class ResourceService {
     }
 
     public ResourceData getResourceById(Integer id) {
+        log.info("Getting resource by id {}", id);
         ResourceData resourceData = repository.findById(id)
                 .map(MAPPER::toResourceData)
                 .orElseThrow(() -> new ResourceNotFoundException(id));

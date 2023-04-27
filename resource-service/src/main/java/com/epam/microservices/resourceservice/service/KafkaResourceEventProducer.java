@@ -14,7 +14,6 @@ public class KafkaResourceEventProducer implements ResourceEventProducer<Resourc
 
     @Value("${spring.kafka.producer.resource-event-topic}")
     private String topic;
-
     private final KafkaTemplate<Long, ResourceEvent> kafkaTemplate;
 
     @Override

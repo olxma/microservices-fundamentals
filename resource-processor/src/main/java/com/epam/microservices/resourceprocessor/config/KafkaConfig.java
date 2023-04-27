@@ -1,6 +1,9 @@
 package com.epam.microservices.resourceprocessor.config;
 
 import com.epam.microservices.resourceprocessor.exception.ExtractMetadataException;
+import com.epam.microservices.resourceprocessor.model.ResourceEvent;
+import com.epam.microservices.resourceprocessor.service.ResourceEventHandler;
+import io.micrometer.observation.ObservationRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +29,11 @@ public class KafkaConfig {
                 log.error("Couldn't not consume and process a message: {}", consumerRecord), fixedBackOff);
         errorHandler.addNotRetryableExceptions(ExtractMetadataException.class);
         return errorHandler;
+    }
+
+    @Bean
+    MyKafkaListener myKafkaListener(ObservationRegistry observationRegistry, ResourceEventHandler<ResourceEvent> consumer) {
+        return new MyKafkaListener(consumer, observationRegistry);
     }
 
 }

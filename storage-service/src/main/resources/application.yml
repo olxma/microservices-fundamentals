@@ -46,3 +46,8 @@ logging:
   level:
     liquibase: DEBUG
     com.epam.microservices.storageservice: DEBUG
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

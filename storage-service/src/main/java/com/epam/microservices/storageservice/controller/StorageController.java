@@ -8,6 +8,7 @@ import com.epam.microservices.storageservice.model.StorageObject;
 import com.epam.microservices.storageservice.service.StorageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Slf4j
 @Validated
 @RestController
 @RequiredArgsConstructor
@@ -30,12 +32,14 @@ public class StorageController {
 
     @PostMapping
     public ResponseEntity<CreationResult> createStorage(@RequestBody StorageObject newStorage) {
+        log.info("Creating a storage: {}", newStorage);
         Integer id = service.createStorage(newStorage);
         return ResponseEntity.ok(new CreationResult(id));
     }
 
     @GetMapping
     public ResponseEntity<List<StorageData>> getStorages() {
+        log.info("Getting storages...");
         List<StorageData> storageList = service.getAllStorages();
         return ResponseEntity.ok(storageList);
     }
