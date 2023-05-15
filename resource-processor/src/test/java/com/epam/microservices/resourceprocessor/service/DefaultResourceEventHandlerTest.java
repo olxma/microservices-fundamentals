@@ -17,7 +17,7 @@ import java.time.Instant;
 import static com.epam.microservices.resourceprocessor.TestUtil.getDefaultAudioFileMetadata;
 
 @ExtendWith(MockitoExtension.class)
-class KafkaResourceEventConsumerTest {
+class DefaultResourceEventHandlerTest {
 
     @Mock
     private MetadataService metadataService;
@@ -26,11 +26,11 @@ class KafkaResourceEventConsumerTest {
     @Mock
     private SongServiceClient songServiceClient;
 
-    private KafkaResourceEventConsumer consumer;
+    private DefaultResourceEventHandler consumer;
 
     @BeforeEach
     public void initConsumer() {
-        consumer = new KafkaResourceEventConsumer(metadataService, resourceServiceClient, songServiceClient);
+        consumer = new DefaultResourceEventHandler(metadataService, resourceServiceClient, songServiceClient);
     }
 
     @Test
@@ -45,7 +45,7 @@ class KafkaResourceEventConsumerTest {
         Mockito.when(metadataService.extractMetadata(resource)).thenReturn(metadata);
 
         //when
-        consumer.consume(event);
+        consumer.handle(event);
 
         //then
         Mockito.verify(songServiceClient, Mockito.times(1)).createSongMetadata(metadata);

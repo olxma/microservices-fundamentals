@@ -63,6 +63,62 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.7.0
+    container_name: elasticsearch
+    ports:
+      - '9200:9200'
+    environment:
+      - node.name=elastic01
+      - xpack.security.enabled=false
+      - xpack.security.audit.enabled=false
+      - discovery.type=single-node
+    deploy:
+      resources:
+        limits:
+          memory: 4GB
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.7.0
+    container_name: kibana
+    ports:
+      - '5601:5601'
+    depends_on:
+      - elasticsearch
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.7.0
+    container_name: logstash
+    ports:
+      - '9600:9600'
+      - '5400:5400/tcp'
+    volumes:
+      - ./logstash:/etc/logstash
+    command: -f /etc/logstash/logstash.conf
+    environment:
+      XPACK_MONITORING_ENABLED: false
+    depends_on:
+      - elasticsearch
+
+  prometheus:
+    image: prom/prometheus-linux-arm64
+    container_name: prometheus
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./prometheus:/etc/prometheus
+    command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/main.yaml
+      - ./grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/main.yaml
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+
   registry-service:
     container_name: registry-service
     build:

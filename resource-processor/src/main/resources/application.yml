@@ -43,3 +43,8 @@ logging:
   level:
     liquibase: DEBUG
     com.epam.microservices.resourceprocessor: DEBUG
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

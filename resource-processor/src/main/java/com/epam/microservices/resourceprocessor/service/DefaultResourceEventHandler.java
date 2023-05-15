@@ -7,23 +7,19 @@ import com.epam.microservices.resourceprocessor.model.ResourceEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class KafkaResourceEventConsumer implements ResourceEventConsumer<ResourceEvent> {
+public class DefaultResourceEventHandler implements ResourceEventHandler<ResourceEvent> {
 
     private final MetadataService metadataService;
     private final ResourceServiceClient resourceServiceClient;
     private final SongServiceClient songServiceClient;
 
-    @KafkaListener(
-            topics = "${spring.kafka.consumer.resource-event-topic}",
-            groupId = "${spring.kafka.consumer.group-id}")
     @Override
-    public void consume(ResourceEvent event) {
+    public void handle(ResourceEvent event) {
         Integer resourceId = event.resourceId();
         ByteArrayResource resource = resourceServiceClient.getResourceById(resourceId);
         AudioFileMetadata metadata = metadataService.extractMetadata(resource).withResourceId(resourceId);
