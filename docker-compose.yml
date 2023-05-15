@@ -201,3 +201,12 @@ services:
       - .env
     ports:
       - '8089:8089'
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.1.1
+    container_name: keycloak
+    command: ["start-dev", "--http-port=8888"]
+    env_file:
+      - .env
+    ports:
+      - '8888:8888'
